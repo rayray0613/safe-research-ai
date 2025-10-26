@@ -2,7 +2,7 @@
 from safety import safety_check
 from retrieval import store_documents, retrieve
 from audit_log import log
-from langchain.chat_models import ChatOpenAI
+from langchain.chat_models.openai import ChatOpenAI
 from langchain.prompts import PromptTemplate
 
 def ask_ai(query):

@@ -1,4 +1,4 @@
-from langchain_community.vectorstores.chroma import Chroma
+from langchain_chroma import Chroma
 from langchain_openai.embeddings import OpenAIEmbeddings
 
 
