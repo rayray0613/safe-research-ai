@@ -1,11 +1,7 @@
-import json, datetime, os
+# app/audit_log.py
+import datetime
 
-def log_query(query, answer):
-    entry = {
-        "timestamp": datetime.datetime.now().isoformat(),
-        "query": query,
-        "answer_preview": answer[:100]
-    }
-    os.makedirs("data/logs", exist_ok=True)
-    with open("data/logs/audit_log.jsonl", "a") as f:
-        f.write(json.dumps(entry) + "\n")
+def log(query: str, response: str):
+    timestamp = datetime.datetime.now().isoformat()
+    with open("audit_log.txt", "a") as f:
+        f.write(f"{timestamp}\nQuery: {query}\nResponse: {response}\n\n")
