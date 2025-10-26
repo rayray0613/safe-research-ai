@@ -6,3 +6,19 @@ Response: No relevant information found in document.
 Query: What are the types of AI?
 Response: No relevant information found in document.
 
+2025-10-25T23:51:33.932826
+Query: What is AI?
+Response: Artificial Intelligence (AI) is a branch of computer science that aims to create machines capable of intelligent behavior.
+
+2025-10-25T23:52:23.950937
+Query: What is AI?
+Response: Artificial Intelligence (AI) is a branch of computer science that aims to create machines capable of intelligent behavior.
+
+2025-10-25T23:52:35.625568
+Query: What are the types of AI
+Response: Artificial Intelligence (AI) is a branch of computer science that aims to create machines capable of intelligent behavior.
+
+2025-10-25T23:53:02.676598
+Query: Who won the 2024 Olympics?
+Response: There are several types of AI, including supervised learning, unsupervised learning, and reinforcement learning.
+
