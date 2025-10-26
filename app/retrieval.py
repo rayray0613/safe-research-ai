@@ -1,18 +1,12 @@
 # app/retrieval.py
-# Dummy embeddings for local testing
-class DummyEmbeddings:
-    def embed_documents(self, texts):
-        # Return a list of zero vectors (length 1536)
-        return [[0.0]*1536 for _ in texts]
-    
-    def embed_query(self, text):
-        # Return a single zero vector for the query
-        return [0.0]*1536
-
 from langchain_chroma import Chroma
+from langchain_openai.embeddings import OpenAIEmbeddings  # real embeddings
 
-# Initialize Chroma vector store with dummy embeddings
-vector_store = Chroma(persist_directory="vector_db", embedding_function=DummyEmbeddings())
+# Initialize Chroma vector store with OpenAI embeddings
+vector_store = Chroma(
+    persist_directory="vector_db",
+    embedding_function=OpenAIEmbeddings()
+)
 
 def store_documents(documents):
     """Add documents to the vector store"""

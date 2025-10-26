@@ -22,3 +22,15 @@ Response: Artificial Intelligence (AI) is a branch of computer science that aims
 Query: Who won the 2024 Olympics?
 Response: There are several types of AI, including supervised learning, unsupervised learning, and reinforcement learning.
 
+2025-10-26T01:19:46.520190
+Query: 
+Response: Mock answer based on 3 document(s).
+
+2025-10-26T01:20:44.642574
+Query: What is the main topic of the document?
+Response: Mock answer based on 3 document(s).
+
+2025-10-26T01:22:16.777578
+Query: git add .
+Response: Mock answer based on 3 document(s).
+
