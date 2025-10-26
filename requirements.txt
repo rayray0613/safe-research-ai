@@ -2,10 +2,10 @@ streamlit
 faiss-cpu
 sentence-transformers
 openai
-langchain
-chromadb
-fastapi
-uvicorn
-langchain-openai
 langchain-chroma
 gradio>=3.43.0
+langchain>=0.1
+langchain-openai>=0.0.188
+chromadb>=0.3.23
+fastapi>=0.101.0
+uvicorn>=0.23.2
