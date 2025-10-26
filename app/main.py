@@ -1,41 +1,49 @@
 # app/main.py
 from safety import safety_check
-from retrieval import load_document
-from embeddings import create_embedding
+from retrieval import store_documents, retrieve
 from audit_log import log
+from langchain.chat_models import ChatOpenAI
+from langchain.prompts import PromptTemplate
 
-# Optional: if using OpenAI GPT
-import openai
+# Optional: set your OpenAI API key as environment variable or directly
+# import os
+# os.environ["OPENAI_API_KEY"] = "YOUR_OPENAI_API_KEY"
 
-# Set your API key (replace with your own)
-# openai.api_key = "YOUR_OPENAI_API_KEY"
-
-def ask_ai(document_text, query):
+def ask_ai(query):
     if not safety_check(query):
         return "Query blocked: unsafe content detected."
     
-    # Improved keyword matching
-    query_words = [word.lower() for word in query.split()]
-    for line in document_text.splitlines():
-        line_lower = line.lower()
-        if any(word in line_lower for word in query_words):
-            answer = line
-            break
-    else:
+    # Retrieve relevant documents
+    context = retrieve(query, k=3)
+    if not context:
         answer = "No relevant information found in document."
+    else:
+        # Create prompt for GPT
+        prompt = PromptTemplate(
+            input_variables=["context", "question"],
+            template="Use the following context to answer the question.\nContext: {context}\nQuestion: {question}\nAnswer:"
+        )
+        final_prompt = prompt.format(context="\n".join(context), question=query)
+        
+        # Call GPT
+        llm = ChatOpenAI(temperature=0)
+        answer = llm.predict(final_prompt)
     
     log(query, answer)
     return answer
 
-
-
 if __name__ == "__main__":
     file_path = input("Enter path to text document: ")
-    doc = load_document(file_path)
+    
+    with open(file_path, "r") as f:
+        doc_text = f.read()
+    
+    # Store document in vector database
+    store_documents([doc_text])
     
     while True:
         query = input("\nAsk a question (or type 'exit'): ")
         if query.lower() == "exit":
             break
-        answer = ask_ai(doc, query)
+        answer = ask_ai(query)
         print("AI Answer:", answer)

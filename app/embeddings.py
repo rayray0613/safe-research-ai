@@ -1,6 +1,10 @@
 # app/embeddings.py
-def create_embedding(text: str):
+from langchain.embeddings import OpenAIEmbeddings
+
+def create_embeddings(documents):
     """
-    Placeholder: in the future, convert text to vector embeddings.
+    Convert a list of text documents into embeddings
     """
-    return text
+    embeddings = OpenAIEmbeddings()
+    doc_vectors = [embeddings.embed_query(doc) for doc in documents]
+    return doc_vectors

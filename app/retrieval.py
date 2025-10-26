@@ -1,7 +1,15 @@
 # app/retrieval.py
-def load_document(file_path: str) -> str:
-    """
-    Load a text file and return its contents.
-    """
-    with open(file_path, "r", encoding="utf-8") as f:
-        return f.read()
+from langchain.vectorstores import Chroma
+from langchain.embeddings import OpenAIEmbeddings
+
+# Initialize Chroma vector store
+vector_store = Chroma(persist_directory="vector_db", embedding_function=OpenAIEmbeddings())
+
+def store_documents(documents):
+    """Add documents to the vector store"""
+    vector_store.add_texts(documents)
+
+def retrieve(query, k=1):
+    """Retrieve top-k relevant documents semantically"""
+    results = vector_store.similarity_search(query, k=k)
+    return [r.page_content for r in results]
