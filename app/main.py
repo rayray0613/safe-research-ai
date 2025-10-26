@@ -11,24 +11,22 @@ import openai
 # openai.api_key = "YOUR_OPENAI_API_KEY"
 
 def ask_ai(document_text, query):
-    # Replace this part:
-# keyword = query.split()[0].lower()
-# for line in document_text.splitlines():
-#     if keyword in line.lower():
-#         answer = line
-#         break
-# else:
-#     answer = "No relevant information found in document."
+    if not safety_check(query):
+        return "Query blocked: unsafe content detected."
+    
+    # Improved keyword matching
+    query_words = [word.lower() for word in query.split()]
+    for line in document_text.splitlines():
+        line_lower = line.lower()
+        if any(word in line_lower for word in query_words):
+            answer = line
+            break
+    else:
+        answer = "No relevant information found in document."
+    
+    log(query, answer)
+    return answer
 
-# With this improved version:
-query_words = [word.lower() for word in query.split()]
-for line in document_text.splitlines():
-    line_lower = line.lower()
-    if any(word in line_lower for word in query_words):
-        answer = line
-        break
-else:
-    answer = "No relevant information found in document."
 
 
 if __name__ == "__main__":
