@@ -1,5 +1,6 @@
 # app/retrieval.py
-from langchain.vectorstores import Chroma
+from langchain.vectorstores.chroma import Chroma
+
 from langchain.embeddings import OpenAIEmbeddings
 
 # Initialize Chroma vector store
