@@ -1,5 +1,6 @@
 from langchain_community.vectorstores.chroma import Chroma
-from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain_openai.embeddings import OpenAIEmbeddings
+
 
 
 # Initialize Chroma vector store
