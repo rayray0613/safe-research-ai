@@ -3,7 +3,7 @@ from safety import safety_check
 from retrieval import store_documents, retrieve
 from audit_log import log
 from langchain_openai import ChatOpenAI
-from langchain.prompts import PromptTemplate
+from langchain.prompts.prompt import PromptTemplate
 
 def ask_ai(query):
     if not safety_check(query):
