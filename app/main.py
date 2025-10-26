@@ -5,16 +5,13 @@ from audit_log import log
 from langchain.chat_models import ChatOpenAI
 from langchain.prompts import PromptTemplate
 
-# Optional: set your OpenAI API key as environment variable or directly
-# import os
-# os.environ["OPENAI_API_KEY"] = "YOUR_OPENAI_API_KEY"
-
 def ask_ai(query):
     if not safety_check(query):
         return "Query blocked: unsafe content detected."
     
-    # Retrieve relevant documents
+    # Retrieve top 3 relevant documents
     context = retrieve(query, k=3)
+    
     if not context:
         answer = "No relevant information found in document."
     else:
@@ -35,14 +32,17 @@ def ask_ai(query):
 if __name__ == "__main__":
     file_path = input("Enter path to text document: ")
     
+    # Load document
     with open(file_path, "r") as f:
         doc_text = f.read()
     
-    # Store document in vector database
+    # Store in vector database
     store_documents([doc_text])
     
+    print("\nAI ready! Ask questions about the document (type 'exit' to quit).")
+    
     while True:
-        query = input("\nAsk a question (or type 'exit'): ")
+        query = input("\nYour question: ")
         if query.lower() == "exit":
             break
         answer = ask_ai(query)
