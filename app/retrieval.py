@@ -2,8 +2,12 @@
 # Dummy embeddings for local testing
 class DummyEmbeddings:
     def embed_documents(self, texts):
-        # Return a list of zero vectors (length 1536, typical OpenAI embedding size)
+        # Return a list of zero vectors (length 1536)
         return [[0.0]*1536 for _ in texts]
+    
+    def embed_query(self, text):
+        # Return a single zero vector for the query
+        return [0.0]*1536
 
 from langchain_chroma import Chroma
 
