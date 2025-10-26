@@ -4,3 +4,8 @@ sentence-transformers
 openai
 langchain
 chromadb
+fastapi
+uvicorn
+langchain-openai
+langchain-chroma
+gradio
