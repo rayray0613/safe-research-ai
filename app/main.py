@@ -1,44 +1,48 @@
-# app/main.py
+import subprocess
 import os
-from safety import safety_check
-from retrieval import store_documents, retrieve
-from audit_log import log
-from langchain_openai import ChatOpenAI  # real ChatGPT
 
-def ask_ai(query):
-    if not safety_check(query):
-        return "Query blocked: unsafe content detected."
+def ask_local_ai(prompt):
+    """Send a prompt to the local Ollama model and return its response."""
+    result = subprocess.run(
+        ["ollama", "run", "llama3", prompt],
+        capture_output=True,
+        text=True
+    )
+    return result.stdout.strip()
 
-    context = retrieve(query, k=3)
+def main():
+    file_path = input("Enter path to text document: ").strip()
 
-    if not context:
-        answer = "No relevant information found in document."
-    else:
-        # Use ChatOpenAI to answer using the document
-        llm = ChatOpenAI(temperature=0)
-        answer = llm.predict(
-            f"Use the following context to answer the question.\n"
-            f"Context: {' '.join(context)}\n"
-            f"Question: {query}\nAnswer:"
-        )
+    # Expand ~ to full home directory path if needed
+    if file_path.startswith("~"):
+        file_path = os.path.expanduser(file_path)
 
-    log(query, answer)
-    return answer
+    # Ensure the file exists
+    if not os.path.exists(file_path):
+        print(f"❌ File not found: {file_path}")
+        return
 
-if __name__ == "__main__":
-    file_path = input("Enter path to text document: ")
-    file_path = os.path.expanduser(file_path)
-    
+    # Read document content
     with open(file_path, "r") as f:
         doc_text = f.read()
 
-    store_documents([doc_text])
-    
-    print("\nAI ready! Ask questions about the document (type 'exit' to quit).")
-    
+    print("\n✅ AI ready! Ask questions about the document (type 'exit' to quit).\n")
+
     while True:
-        query = input("\nYour question: ")
+        query = input("Your question: ").strip()
         if query.lower() == "exit":
+            print("👋 Goodbye!")
             break
-        answer = ask_ai(query)
-        print("AI Answer:", answer)
+
+        # Combine the doc text and the user’s question
+        full_prompt = (
+            f"Answer the following question based on this document:\n\n"
+            f"--- DOCUMENT START ---\n{doc_text}\n--- DOCUMENT END ---\n\n"
+            f"Question: {query}\nAnswer clearly and concisely:"
+        )
+
+        response = ask_local_ai(full_prompt)
+        print("\n💬 " + response + "\n")
+
+if __name__ == "__main__":
+    main()
