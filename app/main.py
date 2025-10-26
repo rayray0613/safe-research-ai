@@ -11,30 +11,25 @@ import openai
 # openai.api_key = "YOUR_OPENAI_API_KEY"
 
 def ask_ai(document_text, query):
-    if not safety_check(query):
-        return "Query blocked: unsafe content detected."
-    
-    # For demo purposes, we'll just simulate GPT response
-    # In future: use OpenAI API call here
-    # Example:
-    # response = openai.ChatCompletion.create(
-    #     model="gpt-4",
-    #     messages=[{"role": "system", "content": document_text},
-    #               {"role": "user", "content": query}]
-    # )
-    # answer = response.choices[0].message.content
-    
-    # Minimal demo: return a snippet from document containing keyword
-    keyword = query.split()[0].lower()
-    for line in document_text.splitlines():
-        if keyword in line.lower():
-            answer = line
-            break
-    else:
-        answer = "No relevant information found in document."
-    
-    log(query, answer)
-    return answer
+    # Replace this part:
+# keyword = query.split()[0].lower()
+# for line in document_text.splitlines():
+#     if keyword in line.lower():
+#         answer = line
+#         break
+# else:
+#     answer = "No relevant information found in document."
+
+# With this improved version:
+query_words = [word.lower() for word in query.split()]
+for line in document_text.splitlines():
+    line_lower = line.lower()
+    if any(word in line_lower for word in query_words):
+        answer = line
+        break
+else:
+    answer = "No relevant information found in document."
+
 
 if __name__ == "__main__":
     file_path = input("Enter path to text document: ")
