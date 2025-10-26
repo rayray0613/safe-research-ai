@@ -1,0 +1,8 @@
+2025-10-25T23:41:56.556488
+Query: What is AI?
+Response: No relevant information found in document.
+
+2025-10-25T23:43:07.122630
+Query: What are the types of AI?
+Response: No relevant information found in document.
+

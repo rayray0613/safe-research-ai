@@ -1,0 +1,5 @@
+Artificial Intelligence (AI) is a branch of computer science that aims to create machines capable of intelligent behavior.
+AI can assist in research by organizing study materials, summarizing articles, and generating insights.
+There are several types of AI, including supervised learning, unsupervised learning, and reinforcement learning.
+Ethical AI focuses on preventing bias, maintaining privacy, and ensuring that AI outputs are safe and reliable.
+Students and researchers can benefit from AI tools to accelerate learning and discovery without compromising academic integrity.
